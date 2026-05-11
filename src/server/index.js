@@ -1,3 +1,6 @@
+// import dotenv dan menjalankan konfigurasi
+import 'dotenv/config';
+
 import express from 'express';
 import routes from '../routes/index.js';
 import ErrorHandler from '../middlewares/error.js';
