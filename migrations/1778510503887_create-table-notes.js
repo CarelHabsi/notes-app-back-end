@@ -33,7 +33,7 @@ export const up = (pgm) => {
       type: 'TEXT',
       notNull: true,
     },
-    updated_At: {
+    updated_at: {
       type: 'TEXT',
       notNull: true,
     }

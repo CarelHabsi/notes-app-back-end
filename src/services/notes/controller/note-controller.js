@@ -32,7 +32,7 @@ export const createNote = async (req, res, next) => {
     return next(new InvariantError('Catatan gagal ditambahkan'));
   }
 
-  return response(res, 201, 'Catatan berhasil ditambahkan', note);
+  return response(res, 201, 'Catatan berhasil ditambahkan', { noteId: note.id });
 };
 
 export const getNotes = async (req, res) => {
@@ -50,7 +50,7 @@ export const getNotes = async (req, res) => {
 
   /* line code ini untuk menampilkan data notes dari database*/
   const notes = await NoteRepositories.getNotes(); // panggil method getNotes dari repository
-  return response(res, 200, 'Catatan sukses ditampilkan', notes);
+  return response(res, 200, 'Catatan sukses ditampilkan', { notes: notes });
 };
 
 export const getNoteById = async (req, res, next) => {
@@ -72,7 +72,7 @@ export const getNoteById = async (req, res, next) => {
     return next(new NotFoundError('Catatan tidak ditemukan'));
   }
 
-  return response(res, 200, 'Catatan suskes ditampilkan');
+  return response(res, 200, 'Catatan sukses ditampilkan', { note });
 };
 
 export const editNoteById = async (req, res, next) => {

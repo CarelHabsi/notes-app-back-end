@@ -6,7 +6,7 @@ class NoteRepositories {
     this.pool = new Pool();
   }
 
-  createNote({ title, body, tags }) {
+  async createNote({ title, body, tags }) {
     const id = nanoid(16);
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
@@ -16,7 +16,7 @@ class NoteRepositories {
       values: [id, title, body, tags, createdAt, updatedAt],
     };
 
-    const result = this.pool.query(query);
+    const result = await this.pool.query(query);
 
     return result.rows[0];
   }
@@ -59,4 +59,4 @@ class NoteRepositories {
   }
 }
 
-export default NoteRepositories;
+export default new NoteRepositories();
