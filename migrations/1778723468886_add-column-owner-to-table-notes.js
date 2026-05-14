@@ -1,4 +1,3 @@
-/* eslint-disable camelcase*/
 /**
  * @type {import('node-pg-migrate').ColumnDefinitions | undefined}
  */
@@ -10,31 +9,10 @@ export const shorthands = undefined;
  * @returns {Promise<void> | void}
  */
 export const up = (pgm) => {
-  pgm.createTable('notes', {
-    id: {
+  pgm.addColumn('notes', {
+    owner: {
       type: 'VARCHAR(50)',
-      primaryKey: true,
     },
-    title: {
-      type: 'TEXT',
-      notNull: true,
-    },
-    body: {
-      type: 'TEXT',
-      notNull: true,
-    },
-    tags: {
-      type: 'TEXT[]',
-      notNull: true,
-    },
-    created_at: {
-      type: 'TEXT',
-      notNull: true,
-    },
-    updated_at: {
-      type: 'TEXT',
-      notNull: true,
-    }
   });
 };
 
@@ -44,5 +22,5 @@ export const up = (pgm) => {
  * @returns {Promise<void> | void}
  */
 export const down = (pgm) => {
-  pgm.dropTable('notes');
+  pgm.dropColumn('notes', 'owner');
 };
