@@ -36,7 +36,10 @@ export const createNote = async (req, res, next) => {
     return next(new InvariantError('Catatan gagal ditambahkan'));
   }
 
-  return response(res, 201, 'Catatan berhasil ditambahkan', { noteId: note.id });
+  return response(res, 201, 'Catatan berhasil ditambahkan', {
+    noteId: note.id,
+    id: note.id,
+  });
 };
 
 export const getNotes = async (req, res) => {
@@ -79,7 +82,9 @@ export const getNoteById = async (req, res, next) => {
     return next(new NotFoundError('Catatan tidak ditemukan'));
   }
 
-  if (note.owner !== owner) {
+  const isOwner = await NoteRepositories.verifyNoteAccess(id, owner);
+
+  if (!isOwner) {
     return next(new AuthorizationError('Anda tidak berhak mengakses resource ini'));
   }
 
@@ -116,7 +121,9 @@ export const editNoteById = async (req, res, next) => {
     return next(new NotFoundError('Catatan tidak ditemukan'));
   }
 
-  if (existingNote.owner !== owner) {
+  const isOwner = await NoteRepositories.verifyNoteAccess(id, owner);
+
+  if (!isOwner) {
     return next(new AuthorizationError('Anda tidak berhak mengakses resource ini'));
   }
 

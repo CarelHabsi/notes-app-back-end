@@ -35,3 +35,14 @@ export const getUserById = async (req, res, next) => {
 
   return response(res, 200, 'User berhasil ditampilkan', { user, id: user.id, username: user.username, fullname: user.fullname, created_at: user.created_at, updated_at: user.updated_at });
 };
+
+export const getUsersByUsername = async (req, res, next) => {
+  const username = req.query.username;
+  const user = await UserRepositories.getUsersByUsername(username);
+
+  if (!user) {
+    return next(new NotFoundError('User tidak ditemukan'));
+  }
+
+  return response(res, 200, 'User berhasil ditampilkan', { users: user });
+};
